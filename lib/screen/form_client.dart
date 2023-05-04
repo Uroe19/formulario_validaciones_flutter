@@ -4,6 +4,7 @@ import 'package:formulario_validaciones_flutter/widgets/components/text_field_ba
 
 class FormClientScreen extends StatelessWidget {
   TextEditingController ctrlRFC = TextEditingController();
+  TextEditingController ctrlNumberPhone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,12 @@ class FormClientScreen extends StatelessWidget {
               "RFC",
               ctrlRFC,
               validateText: ValidateText.rfc,
-            )
+            ),
+            TextFieldBase(
+              "Numero teléfono",
+              ctrlNumberPhone,
+              validateText: ValidateText.phoneNumber,
+            ),
           ],
         ),
       ),

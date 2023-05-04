@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:formulario_validaciones_flutter/common/enums.dart';
+
+import '../../utils/UpperCaseTextFormatter.dart';
 
 class TextFieldBase extends StatelessWidget {
   String text;
@@ -15,6 +18,7 @@ class TextFieldBase extends StatelessWidget {
         TextFormField(
           controller: controller,
           maxLength: ValidateMaxLegth(),
+          inputFormatters: [ValidateInputFormatters()],
         )
       ],
     );
@@ -33,5 +37,18 @@ class TextFieldBase extends StatelessWidget {
       default:
         return null;
     }
+  }
+
+    ValidateInputFormatters() {
+    switch (validateText) {
+      case ValidateText.rfc:
+        return UpperCaseTextFormatter();
+      case ValidateText.phoneNumber:
+        return FilteringTextInputFormatter.digitsOnly;
+      case ValidateText.zipCode:
+        return FilteringTextInputFormatter.digitsOnly;
+      default:
+        return FilteringTextInputFormatter.singleLineFormatter;
+     }
   }
 }
