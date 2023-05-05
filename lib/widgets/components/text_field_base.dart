@@ -20,7 +20,9 @@ class TextFieldBase extends StatelessWidget {
           controller: controller,
           maxLength: ValidateMaxLegth(),
           inputFormatters: [ValidateInputFormatters()],
-          validator: (String? value) {},
+          validator: (String? value) {
+            return ValidateStructure(value);
+          },
         )
       ],
     );
@@ -59,11 +61,13 @@ class TextFieldBase extends StatelessWidget {
       case ValidateText.rfc:
         return validateRFC(value!)?null:message("RFC");
       case ValidateText.phoneNumber:
-        return validatePhoneNumber(value!)?null:message("numero de teléfono");
+        return validatePhoneNumber(value!)?null:message("número de teléfono");
+      case ValidateText.email:
+        return validateEmail(value!)?null:message("email");
       case ValidateText.zipCode:
-        return validateEmail(value!)?null:message("numero de teléfono");
+        return validateZipCode(value!)?null:message("codigo postal");
       default:
-        return validateZipCode(value!)?null:message("numero de teléfono");
+        return null;
     }
   }
 
