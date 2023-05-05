@@ -6,6 +6,7 @@ class FormClientScreen extends StatelessWidget {
   TextEditingController ctrlRFC = TextEditingController();
   TextEditingController ctrlNumberPhone = TextEditingController();
   TextEditingController ctrlEmail = TextEditingController();
+  TextEditingController ctrlZipCode = TextEditingController();
   GlobalKey<FormState> keyForm = GlobalKey<FormState>();
 
   @override
@@ -27,6 +28,12 @@ class FormClientScreen extends StatelessWidget {
               "Email",
               ctrlEmail,
               validateText: ValidateText.email,
+            ),
+            TextFieldBase(
+              "Código postal",
+              ctrlZipCode,
+              validateText: ValidateText.zipCode,
+              notRequired: true,
             ),
             TextFieldBase(
               "Numero teléfono",

@@ -10,7 +10,9 @@ class TextFieldBase extends StatelessWidget {
   String text;
   TextEditingController controller;
   ValidateText? validateText;
-  TextFieldBase(this.text, this.controller, {this.validateText});
+  bool notRequired;
+  TextFieldBase(this.text, this.controller,
+      {this.validateText, this.notRequired = false});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,19 +59,23 @@ class TextFieldBase extends StatelessWidget {
   }
 
   ValidateStructure(String? value) {
-    switch (validateText) {
-      case ValidateText.rfc:
-        return validateRFC(value!)?null:message("RFC");
-      case ValidateText.phoneNumber:
-        return validatePhoneNumber(value!)?null:message("número de teléfono");
-      case ValidateText.email:
-        return validateEmail(value!)?null:message("email");
-      case ValidateText.zipCode:
-        return validateZipCode(value!)?null:message("codigo postal");
-      default:
-        return null;
+    if (!notRequired && value!.isEmpty) {
+      return "El campo $text es requerido";
+    } else {
+      switch (validateText) {
+        case ValidateText.rfc:
+          return validateRFC(value!) ? null : message("RFC");
+        case ValidateText.phoneNumber:
+          return validatePhoneNumber(value!)
+              ? null
+              : message("número de teléfono");
+        case ValidateText.email:
+          return validateEmail(value!) ? null : message("email");
+        default:
+          return null;
+      }
     }
   }
 
-  message (String type) => "La estructura del $type es incorrecta";
+  message(String type) => "La estructura del $type es incorrecta";
 }
