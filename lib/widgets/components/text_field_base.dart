@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:formulario_validaciones_flutter/common/enums.dart';
+import 'package:formulario_validaciones_flutter/common/validate.dart';
+
+import '../../utils/UpperCaseTextFormatter.dart';
 
 class TextFieldBase extends StatelessWidget {
   String text;
@@ -15,6 +19,8 @@ class TextFieldBase extends StatelessWidget {
         TextFormField(
           controller: controller,
           maxLength: ValidateMaxLegth(),
+          inputFormatters: [ValidateInputFormatters()],
+          validator: (String? value) {},
         )
       ],
     );
@@ -34,4 +40,32 @@ class TextFieldBase extends StatelessWidget {
         return null;
     }
   }
+
+  ValidateInputFormatters() {
+    switch (validateText) {
+      case ValidateText.rfc:
+        return UpperCaseTextFormatter();
+      case ValidateText.phoneNumber:
+        return FilteringTextInputFormatter.digitsOnly;
+      case ValidateText.zipCode:
+        return FilteringTextInputFormatter.digitsOnly;
+      default:
+        return FilteringTextInputFormatter.singleLineFormatter;
+    }
+  }
+
+  ValidateStructure(String? value) {
+    switch (validateText) {
+      case ValidateText.rfc:
+        return validateRFC(value!)?null:message("RFC");
+      case ValidateText.phoneNumber:
+        return validatePhoneNumber(value!)?null:message("numero de teléfono");
+      case ValidateText.zipCode:
+        return validateEmail(value!)?null:message("numero de teléfono");
+      default:
+        return validateZipCode(value!)?null:message("numero de teléfono");
+    }
+  }
+
+  message (String type) => "La estructura del $type es incorrecta";
 }
