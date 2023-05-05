@@ -5,12 +5,12 @@ validateRFC(String rfc) {
 }
 
 validateEmail(String email) {
-  String exp = r'/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/';
+  String exp = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
   return RegExp(exp).hasMatch(email);
 }
 
 validatePhoneNumber(String phoneNumber) {
-  String exp = r'/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/';
+  String exp = r'^(?:[+0]9)?[0-9]{8,15}$';
   return RegExp(exp).hasMatch(phoneNumber);
 }
 
