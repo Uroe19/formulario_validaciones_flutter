@@ -6,6 +6,7 @@ import 'package:formulario_validaciones_flutter/common/validate.dart';
 
 import '../../utils/UpperCaseTextFormatter.dart';
 
+// ignore: must_be_immutable
 class TextFieldBase extends StatelessWidget {
   String text;
   TextEditingController controller;
